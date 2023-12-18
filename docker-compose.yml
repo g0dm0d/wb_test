@@ -1,0 +1,53 @@
+version: '3'
+
+networks:
+  wbservice:
+    driver: bridge
+
+services:
+  nats-streaming:
+    image: nats-streaming:0.25.6
+    container_name: nats-streaming
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    environment:
+      - NATS_STREAMING_ID=streaming-server
+      - NATS_CLUSTER_ID=service-test-cluster
+    networks: 
+     - wbservice
+    restart: "on-failure"
+
+  service-api:
+    container_name: service-api
+    build:
+      dockerfile: ./deployments/Dockerfile
+    expose:
+      - "${APP_PORT}"
+    port:
+      - "${APP_PORT}:${APP_PORT}"
+    networks:
+      - wbservice
+    configs:
+      - source: env
+        target: /.env
+    restart: "on-failure"
+
+  service-db:
+    container_name: service-db
+    image: postgres:16.1-alpine3.18
+    expose:
+      - "5432"
+    volumes:
+      - "./internal/store/migrations/000001_init.up.sql:/docker-entrypoint-initdb.d/database.sql"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "12345"
+      POSTGRES_DB: "postgres"
+    networks: 
+     - wbservice
+    restart: "on-failure"
+
+configs:
+  env:
+    file: ./.env
