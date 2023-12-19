@@ -30,7 +30,7 @@ func (s *Service) HandleData(m *stan.Msg) {
 		return
 	}
 
-	s.cache.Set(message.OrderUid, message)
+	s.cache.Set(message.OrderUid, m.Data)
 	return
 }
 

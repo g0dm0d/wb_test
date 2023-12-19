@@ -26,6 +26,8 @@ services:
       - "${APP_PORT}"
     networks:
       - wbservice
+    ports:
+      - "3000:3000"
     configs:
       - source: env
         target: /.env

@@ -3,7 +3,6 @@ package main_test
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -12,7 +11,6 @@ import (
 	"os"
 	"testing"
 
-	"github.com/g0dm0d/wbtest/internal/dto"
 	"github.com/g0dm0d/wbtest/internal/server/req"
 	"github.com/go-chi/chi/v5"
 	"github.com/stretchr/testify/require"
@@ -231,12 +229,7 @@ func TestGetOrderFromCache(t *testing.T) {
 
 	cacheMap := cache.NewCacheMap()
 
-	var rightRespJSON dto.Order
-	err = json.Unmarshal(rightResp, &rightRespJSON)
-	if err != nil {
-		t.Error(err)
-	}
-	cacheMap.Set("b563feb7b2b84b6test", rightRespJSON)
+	cacheMap.Set("b563feb7b2b84b6test", rightResp)
 
 	order := order.New(orderStore, cacheMap)
 	order.GetOrder(&req.Ctx{
@@ -272,12 +265,7 @@ func TestGetOrderFromCacheNoDB(t *testing.T) {
 
 	cacheMap := cache.NewCacheMap()
 
-	var rightRespJSON dto.Order
-	err = json.Unmarshal(rightResp, &rightRespJSON)
-	if err != nil {
-		t.Error(err)
-	}
-	cacheMap.Set("b563feb7b2b84b6test", rightRespJSON)
+	cacheMap.Set("b563feb7b2b84b6test", rightResp)
 
 	order := order.New(orderStore, cacheMap)
 	order.GetOrder(&req.Ctx{
