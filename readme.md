@@ -13,6 +13,7 @@ Transfer/sec:     67.78MB
 
 ```shell
 cp ./configs/.env.example .env
+source .env
 docker compose build
 docker compose up
 ```
