@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<script>
+  function search() {
+    var orderId = document.getElementById('orderId').value;
+
+    fetch('http://localhost:8080/api/' + orderId)
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('result').innerHTML = JSON.stringify(data);
+      });
+
+    document.getElementById('result').innerHTML = result;
+  }
+</script>
+
+<body>
+  <label for="orderId">Enter orderID:</label>
+  <input type="text" id="orderId" placeholder="Enter ID">
+
+  <button onclick="search()">Search</button>
+
+  <div id="result"></div>
+</body>
+
+</html>

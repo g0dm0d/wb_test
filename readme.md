@@ -16,3 +16,5 @@ cp ./configs/.env.example .env
 docker compose build
 docker compose up
 ```
+
+in browser http://localhost:8080 simple web

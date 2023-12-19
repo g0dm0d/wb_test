@@ -24,13 +24,21 @@ services:
       dockerfile: ./deployments/Dockerfile
     expose:
       - "${APP_PORT}"
-    port:
-      - "${APP_PORT}:${APP_PORT}"
     networks:
       - wbservice
     configs:
       - source: env
         target: /.env
+    restart: "on-failure"
+
+  service-web:
+    container_name: service-web
+    build:
+      dockerfile: ./website/Dockerfile
+    ports:
+      - "8080:80"
+    networks: 
+     - wbservice
     restart: "on-failure"
 
   service-db:
