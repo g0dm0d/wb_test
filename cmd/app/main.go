@@ -27,7 +27,7 @@ func main() {
 	// Init stores
 	orderStore := postgres.NewOrderStore(db)
 
-	// Init request cach store
+	// Init request cache store
 	cacheMap := cache.NewCacheMap()
 
 	// Run simple gc every 10 minutes. So that the cache does not contain too much unnecessary data

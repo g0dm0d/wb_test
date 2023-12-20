@@ -7,8 +7,6 @@ import (
 	"github.com/joho/godotenv"
 )
 
-const version = "BUILD_VERSION"
-
 type App struct {
 	Addr string
 	Port int

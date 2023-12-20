@@ -161,14 +161,15 @@ func TestNatsHandler(t *testing.T) {
 
 	defer sub.Unsubscribe()
 
-	log.Println(cacheMap)
-
 	_, ok := cacheMap.Get("b563feb7b2b84b6test")
 	if !ok {
 		t.Error("value in cache not found")
 	}
 
 	_, err = db.Exec("DELETE FROM Orders")
+	if err != nil {
+		t.Error(err)
+	}
 }
 
 func TestGetOrderFromDB(t *testing.T) {

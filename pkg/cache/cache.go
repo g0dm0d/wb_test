@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type CacheMap struct {
+type Map struct {
 	mu     sync.Mutex
 	values map[string]*CachedValue
 }
@@ -15,13 +15,13 @@ type CachedValue struct {
 	value    interface{}
 }
 
-func NewCacheMap() *CacheMap {
-	return &CacheMap{
+func NewCacheMap() *Map {
+	return &Map{
 		values: make(map[string]*CachedValue),
 	}
 }
 
-func (c *CacheMap) GCCollector() {
+func (c *Map) GCCollector() {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	for key, value := range c.values {
@@ -31,7 +31,7 @@ func (c *CacheMap) GCCollector() {
 	}
 }
 
-func (c *CacheMap) Set(key string, value interface{}) {
+func (c *Map) Set(key string, value interface{}) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
@@ -41,7 +41,7 @@ func (c *CacheMap) Set(key string, value interface{}) {
 	}
 }
 
-func (c *CacheMap) Get(key string) (interface{}, bool) {
+func (c *Map) Get(key string) (interface{}, bool) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 

@@ -12,10 +12,10 @@ type Nats interface {
 
 type Service struct {
 	orderStore store.OrderStore
-	cache      *cache.CacheMap
+	cache      *cache.Map
 }
 
-func New(orderStore store.OrderStore, cacheMap *cache.CacheMap) *Service {
+func New(orderStore store.OrderStore, cacheMap *cache.Map) *Service {
 	return &Service{
 		orderStore: orderStore,
 		cache:      cacheMap,

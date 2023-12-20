@@ -12,7 +12,7 @@ type Service struct {
 	Nats  nats.Nats
 }
 
-func New(orderStore store.OrderStore, cache *cache.CacheMap) *Service {
+func New(orderStore store.OrderStore, cache *cache.Map) *Service {
 	return &Service{
 		Order: order.New(orderStore, cache),
 		Nats:  nats.New(orderStore, cache),
